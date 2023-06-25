@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  app:
+    container_name: vnc_docker_app
+    build:
+      context: ./vnc_docker
+      args:
+        BASE_IMAGE: ${BASE_IMAGE}
+    image: nelisvolschenk/vnc_docker_app-${BASE_IMAGE}
+    restart: unless-stopped
+    volumes:
+      - ./datadir/home_dir:/data
+      - ./datadir/configfiles:/configfiles
+
+  proxy:
+    container_name: vnc_app-caddy
+    build:
+      context: ./caddy
+    image: nelisvolschenk/vnc_docker_caddy
+    restart: unless-stopped
+    volumes:
+      - ./datadir/home_dir:/data
+    ports:
+      - 8080:8080
+    environment:
+      APP_USERNAME: ${APP_USERNAME}
+      APP_PASSWORD_HASH: ${APP_PASSWORD_HASH}
