@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=DEBIAN:BUSTER
+ARG BASE_IMAGE=debian:buster
 FROM golang:1.14-buster AS easy-novnc-build
 WORKDIR /src
 RUN go mod init build && \
