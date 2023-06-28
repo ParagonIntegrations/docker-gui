@@ -3,10 +3,10 @@ version: '3'
 services:
   app:
     container_name: vnc_docker_app
-    build:
-      context: ./vnc_docker
-      args:
-        BASE_IMAGE: ${BASE_IMAGE}
+#    build:
+#      context: ./vnc_docker
+#      args:
+#        BASE_IMAGE: ${BASE_IMAGE}
     image: nelisvolschenk/vnc_docker_app-${BASE_IMAGE}
     restart: unless-stopped
     volumes:
@@ -15,9 +15,9 @@ services:
 
   proxy:
     container_name: vnc_app-caddy
-    build:
-      context: ./caddy
-    image: nelisvolschenk/vnc_docker_caddy
+#    build:
+#      context: ./caddy
+    image: nelisvolschenk/vnc_docker_caddy:latest
     restart: unless-stopped
     volumes:
       - ./datadir/home_dir:/data
