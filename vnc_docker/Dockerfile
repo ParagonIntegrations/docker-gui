@@ -7,6 +7,9 @@ RUN go mod init build && \
 
 FROM ${BASE_IMAGE}
 
+COPY --from=easy-novnc-build /bin/easy-novnc /usr/local/bin/
+EXPOSE 8080
+
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends openbox tigervnc-standalone-server supervisor gosu && \
     rm -rf /var/lib/apt/lists && \
@@ -16,22 +19,8 @@ RUN apt-get update -y && \
     apt-get install -y --no-install-recommends lxterminal nano wget openssh-client rsync ca-certificates xdg-utils htop tar xzip gzip bzip2 zip unzip && \
     rm -rf /var/lib/apt/lists
 
-RUN apt-get update && \
-#    apt install software-properties-common -y && \
-#    add-apt-repository ppa:mozillateam/ppa
-#    gedit /etc/apt/preferences.d/mozillateamppa && \
-#RUN    apt-get update && \
-    apt-get install -y firefox-esr && \
-    rm -rf /var/lib/apt/lists
-
-#RUN apt-get update -y && \
-#    apt-get install -y --no-install-recommends thunderbird && \
-#    rm -rf /var/lib/apt/lists
-
-COPY --from=easy-novnc-build /bin/easy-novnc /usr/local/bin/
 #COPY menu.xml /etc/xdg/openbox/
 #COPY supervisord.conf /etc/
-EXPOSE 8080
 
 RUN groupadd --gid 1000 app && \
     useradd --home-dir /data --shell /bin/bash --uid 1000 --gid 1000 app && \
